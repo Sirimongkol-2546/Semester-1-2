@@ -48,18 +48,13 @@ class SinglyLinkedList:
         start = self.head
         prev = self.head.next
 
-        while start != None:
-            if start.name == node:
-                break
-            start = start.next
+        if self.head == None:
+            print("Cannot insert,", node, "does not exist.")
         else:
-            print("Cannot insert <node> dose not exit.")
-
-        #ข้อมูลตัวแรกเป็น node
-        if self.head.name == start:
-            pNew.next == start
-            self.head = pNew
-            self.count += 1
+            if self.head.name == node:
+                pNew.next = start
+                self.head = pNew
+                self.count += 1
 
         while prev != None:
             if prev.name == node:
@@ -67,7 +62,7 @@ class SinglyLinkedList:
                 start.next = pNew
                 self.count += 1
             start = start.next
-            prev = prev.next
+            prev = prev.next   
         return
 
     def delete(self, name):
