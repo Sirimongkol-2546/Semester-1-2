@@ -2,11 +2,12 @@ import java.util.*;
 public class Lab3 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int num, even, odd;
-        num = input.nextInt();
+        int even, odd;
         even = 0;
         odd = 0;
-        while (num == -1){
+        while (true){
+            int num = input.nextInt();
+            if(num < 0) break;
             if(num%2 == 0){even += 1;} 
             else{odd += 1;}
         }
