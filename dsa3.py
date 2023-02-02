@@ -48,21 +48,26 @@ class SinglyLinkedList:
         start = self.head
         prev = self.head.next
 
-        if self.head == None:
-            print("Cannot insert,", node, "does not exist.")
-        else:
-            if self.head.name == node:
+        if self.head.name == node:
                 pNew.next = start
                 self.head = pNew
                 self.count += 1
+                return
 
         while prev != None:
+            # if self.head != node:
+            #     print("Cannot insert,", node, "does not exist.")
+            #     break
             if prev.name == node:
                 pNew.next = prev
                 start.next = pNew
                 self.count += 1
             start = start.next
-            prev = prev.next   
+            prev = prev.next
+            return
+
+        if prev == None:
+            print("Cannot insert,", node, "does not exist.")
         return
 
     def delete(self, name):
@@ -95,12 +100,12 @@ pNew = DataNode("John")
 mylist.head = pNew
 #print(mylist.head.name)
 
-pNew = DataNode("Tony")
-mylist.head.next = pNew
+# pNew = DataNode("Tony")
+# mylist.head.next = pNew
 #print(mylist.head.next.name)
 
-mylist.insertFront("Bill")
-mylist.insertLast("Someone")
+# mylist.insertFront("Bill")
+# mylist.insertLast("Someone")
 mylist.insertBefore("John", "Alex")
-mylist.delete("Jhn")
+# mylist.delete("Jhn")
 mylist.traverse()
