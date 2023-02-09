@@ -29,5 +29,5 @@ public class Account {
     public void showInfo(){
         System.out.println("In " + name + " account, there is a balance equal to " + balance + " Baht.");
     }
-    
+
 }
