@@ -1,10 +1,11 @@
-package oop;
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author sudthirak
@@ -70,23 +71,41 @@ public class ChatDemo implements ActionListener, WindowListener{
     @Override
     public void windowOpened(WindowEvent e) {
         String txt = "";
-        try{ 
+        File f = new File("ChatDemo.dat");
+        if(f.exists() == false){
+            try {
+                f.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(ChatDemo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+ 
+        try(FileReader fr = new FileReader("ChatDemo.dat");){ 
             int ch;
-            FileReader f = new FileReader("ChatDemo.dat");
-            ch = f.read();
+            ch = fr.read();
             while (ch != -1){
                 System.out.println((char)ch);
-                ch = f.read();
+                txt += (char)ch;
+                ch = fr.read();
             }
+            area.setText(txt);
         }
-        catch{
-            
+        catch(IOException ex){
+            ex.printStackTrace();          
         }
     }
             
     @Override
     public void windowClosing(WindowEvent e) {
+        try(FileWriter fw = new FileWriter("ChatDemo.dat");){
+            fw.write(area.getText());
         
+        }
+        catch(IOException io){
+            System.out.println(io);
+            
+        }
     }
         
     @Override
