@@ -1,12 +1,15 @@
-package lab12_oop;
+package oop;
+import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  *
  * @author sudthirak
  */
-public class ChatDemo implements ActionListener{
+public class ChatDemo implements ActionListener, WindowListener{
     private JFrame fr;
     private JTextArea area;
     private JTextField blank;
@@ -36,6 +39,8 @@ public class ChatDemo implements ActionListener{
         fr.add(panel, BorderLayout.SOUTH);
         
         submit.addActionListener(this);
+        reset.addActionListener(this);
+        fr.addWindowListener(this);
         
         fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fr.pack();
@@ -46,58 +51,58 @@ public class ChatDemo implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         
         if (e.getSource().equals(submit)){
-           
+           DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+           if (area.getText().equals("")){
+               area.setText(dtf.format(LocalDateTime.now()) + ": " + blank.getText());
+               blank.setText("");
+           }
+           else{
+               area.setText(area.getText()+ "\n" + dtf.format(LocalDateTime.now()) + ": " + blank.getText());
+               blank.setText("");
+           }
+        }
+        
+        else if (e.getSource().equals(reset)){
+            area.setText("");
         }
     }
-    
-    //setter getter
-//    public void setFr(JFrame fr){
-//        this.fr = fr;
-//    }
-//    
-//    public void setArea(JTextArea area){
-//        this.area = area;
-//    }
-//    
-//    public void setBlank(JTextField blank){
-//        this.blank = blank;
-//    }
-//    
-//    public void setPanel(JPanel panel){
-//        this.panel = panel;
-//    }
-//    
-//    public void setSubmit(JButton submit){
-//        this.submit = submit;
-//    }
-//    
-//    public void setReset(JButton reset){
-//        this.reset = reset;
-//    }
-//    
-//    public JFrame getFr(){
-//        return fr;
-//    }
-//    
-//    public JTextArea getArea(){
-//        return area;
-//    }
-//    
-//    public JTextField getBlank(){
-//        return blank;
-//    }
-//    
-//    public JPanel getPanel(){
-//        return panel;
-//    }
-//    
-//    public JButton getSubmit(){
-//        return submit;
-//    }
-//    
-//    public JButton getReset(){
-//        return reset;
-//    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        String txt = "";
+        try{ 
+            int ch;
+            FileReader f = new FileReader("ChatDemo.dat");
+            ch = f.read();
+            while (ch != -1){
+                System.out.println((char)ch);
+                ch = f.read();
+            }
+        }
+        catch{
+            
+        }
+    }
+            
+    @Override
+    public void windowClosing(WindowEvent e) {
+        
+    }
+        
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {}
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 
     
 }
