@@ -1,5 +1,10 @@
+package lab12_oop;
 import java.io.*;
-public class Student implements Serializable {
+/**
+ *
+ * @author sudthirak
+ */
+public class Student implements Serializable{
     private String name;
     private int ID;
     private int money;

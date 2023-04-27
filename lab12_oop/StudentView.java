@@ -1,7 +1,10 @@
+package lab12_oop;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentView implements ActionListener, WindowListener{
     private JFrame fr;
@@ -52,31 +55,73 @@ public class StudentView implements ActionListener, WindowListener{
         
     }
     
-//    FileOutputStream fw = new FileOutputStream("ChatDemo.dat");
-//            ObjectOutputStream oout = new  ObjectOutputStream(fw);
-//            oout.writeObject();
-
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(deposit)){
+            int total = Integer.parseInt(text_Money.getText()) + 100; //convert Str -> int
+            text_Money.setText(total + ""); //convert int -> Str
+            s.setMoney(total);
+            
+        }
         
+        else if(e.getSource().equals(withdraw)){
+            if (Integer.parseInt(text_Money.getText()) - 100 >= 0){
+                int total = Integer.parseInt(text_Money.getText()) - 100;
+                text_Money.setText(total + "");
+                s.setMoney(total);
+            }
+        }
     }
 
     @Override
     public void windowOpened(WindowEvent e) {
+        s = null;
+        File file = new File("StudentM.dat");
+        if(file.exists() == false){
+            try {
+                file.createNewFile();
+            } 
+            catch (IOException ex) {
+                Logger.getLogger(StudentView.class.getName()).log(Level.SEVERE, null, ex);
+//                ex.printStackTrace();
+            }
+        }
+        
+        // Load
+        try(FileInputStream fin = new FileInputStream("StudentM.dat");
+            ObjectInputStream oin = new ObjectInputStream(fin);){
+            s = (Student)oin.readObject(); // convert Obj -> Student
+            text_ID.setText(s.getMoney() + "");
+            text_Name.setText(s.getName());
+            text_Money.setText(s.getMoney() + "");
+                 
+            oin.close();
+            fin.close();
+            
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+            
+        }
+        catch(ClassNotFoundException c){
+            c.printStackTrace();
+        }
         
     }
 
+    // Save
     @Override
     public void windowClosing(WindowEvent e) {
-        try(FileOutputStream fw = new FileOutputStream("ChatDemo.dat");
-            ObjectOutputStream oout = new  ObjectOutputStream(fw);){
-         
-            FileOutputStream fw = new FileOutputStream("ChatDemo.dat");
-            ObjectOutputStream oout = new  ObjectOutputStream(fw);
+        try(FileOutputStream fw = new FileOutputStream("Student.dat");
+            ObjectOutputStream oout = new ObjectOutputStream(fw);){
             oout.writeObject(s);
-            System.out.println("");
+            
+            oout.close();
+            fw.close();
+            System.out.println("Serialized data is saved.");
         }
-        catch(){
+        catch(IOException ex){
+            ex.printStackTrace();
             
         }
     }
