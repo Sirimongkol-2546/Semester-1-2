@@ -1,13 +1,16 @@
-package lab12_oop;
+package lab12;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ *
+ * @author LAB203_44
+ */
 public class StudentView implements ActionListener, WindowListener{
-    private JFrame fr;
+     private JFrame fr;
     private JPanel panel1, panel2;
     private JLabel id, name, money;
     private JTextField text_ID, text_Name, text_Money;
@@ -75,9 +78,11 @@ public class StudentView implements ActionListener, WindowListener{
 
     @Override
     public void windowOpened(WindowEvent e) {
-        s = null;
+//        s = null;
         File file = new File("StudentM.dat");
-        if(file.exists() == false){
+        
+        if(s == null){
+            s = new Student();
             try {
                 file.createNewFile();
             } 
@@ -88,10 +93,12 @@ public class StudentView implements ActionListener, WindowListener{
         }
         
         // Load
-        try(FileInputStream fin = new FileInputStream("StudentM.dat");
-            ObjectInputStream oin = new ObjectInputStream(fin);){
+        try{
+            FileInputStream fin = new FileInputStream("StudentM.dat"); 
+            ObjectInputStream oin = new ObjectInputStream(fin);
+            
             s = (Student)oin.readObject(); // convert Obj -> Student
-            text_ID.setText(s.getMoney() + "");
+            text_ID.setText(s.getID() + "");
             text_Name.setText(s.getName());
             text_Money.setText(s.getMoney() + "");
                  
@@ -100,6 +107,7 @@ public class StudentView implements ActionListener, WindowListener{
             
         }
         catch(IOException ex){
+            System.out.println("1");
             ex.printStackTrace();
             
         }
@@ -112,8 +120,10 @@ public class StudentView implements ActionListener, WindowListener{
     // Save
     @Override
     public void windowClosing(WindowEvent e) {
-        try(FileOutputStream fw = new FileOutputStream("Student.dat");
-            ObjectOutputStream oout = new ObjectOutputStream(fw);){
+        s.setID((Integer.parseInt(text_ID.getText())));
+        s.setName(text_Name.getText());
+        try{FileOutputStream fw = new FileOutputStream("StudentM.dat");
+            ObjectOutputStream oout = new ObjectOutputStream(fw);
             oout.writeObject(s);
             
             oout.close();
@@ -127,30 +137,18 @@ public class StudentView implements ActionListener, WindowListener{
     }
 
     @Override
-    public void windowClosed(WindowEvent e) {
-        
-    }
+    public void windowClosed(WindowEvent e) {}
 
     @Override
-    public void windowIconified(WindowEvent e) {
-        
-    }
+    public void windowIconified(WindowEvent e) {}
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
-        
-    }
+    public void windowDeiconified(WindowEvent e) {}
 
     @Override
-    public void windowActivated(WindowEvent e) {
-        
-    }
+    public void windowActivated(WindowEvent e) {}
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
-        
-    }
-    
-    
+    public void windowDeactivated(WindowEvent e) {}
     
 }

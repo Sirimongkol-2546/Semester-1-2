@@ -1,3 +1,4 @@
+package lab12;
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  *
- * @author sudthirak
+ * @author LAB203_44
  */
 public class ChatDemo implements ActionListener, WindowListener{
     private JFrame fr;
@@ -122,6 +123,4 @@ public class ChatDemo implements ActionListener, WindowListener{
 
     @Override
     public void windowDeactivated(WindowEvent e) {}
-
-    
 }

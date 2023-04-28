@@ -1,8 +1,8 @@
-package lab12_oop;
+package lab12;
 import java.io.*;
 /**
  *
- * @author sudthirak
+ * @author LAB203_44
  */
 public class Student implements Serializable{
     private String name;
@@ -43,4 +43,5 @@ public class Student implements Serializable{
     public int getMoney(){
         return money;
     }
+    
 }
